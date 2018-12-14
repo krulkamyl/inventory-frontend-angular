@@ -61,7 +61,7 @@ export class ProductNewComponent implements OnInit {
     }
 
     onSubmit(value) {
-        let postData = {
+        const postData = {
             name: value.name,
             price: value.price
         };

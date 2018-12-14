@@ -28,7 +28,7 @@ export class ParameterEditComponent implements OnInit {
       this.id = +params['id'];
     });
 
-    this.parameterService.getSingleParam(this.id).subscribe((data : Parameter) => {
+    this.parameterService.getSingleParam(this.id).subscribe((data: Parameter) => {
       this.name.setValue(data.name);
     });
   }
@@ -45,7 +45,7 @@ export class ParameterEditComponent implements OnInit {
           }
       );
     } else {
-      alert("Field is required!");
+      alert('Field is required!');
     }
 
   }

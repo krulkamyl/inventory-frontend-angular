@@ -13,7 +13,7 @@ import {Product} from '../../../models/product';
 export class ProductEditComponent implements OnInit {
     id: number;
     private sub: any;
-    parameters = [];
+    parameters: any = [];
     validation_messages = {
         'name': [
             {type: 'required', message: 'Name is required'},
@@ -80,7 +80,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     onSubmit(value) {
-        let postData = {
+        const postData = {
             name: value.name,
             price: value.price
         };

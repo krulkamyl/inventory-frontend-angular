@@ -13,7 +13,7 @@ export class CustomerEditComponent implements OnInit {
   id: number;
   private sub: any;
 
-  name = new FormControl('',[
+  name = new FormControl('', [
     Validators.required,
     Validators.minLength(2)
   ]);
@@ -46,7 +46,7 @@ export class CustomerEditComponent implements OnInit {
           }
       );
     } else {
-      alert("Field is required!");
+      alert('Field is required!');
     }
 
   }

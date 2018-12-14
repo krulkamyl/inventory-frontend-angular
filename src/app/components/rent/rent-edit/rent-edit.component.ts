@@ -19,8 +19,8 @@ export class RentEditComponent implements OnInit {
     id: number;
     private sub: any;
     timeDurations = [3, 7, 14, 30, 60, 90, 180, 365];
-    customers = [];
-    products = [];
+    customers: Array<Customer>;
+    products: Array<Product>;
     rent: Rent;
 
     rentForm: FormGroup = this.formBuilder.group({
@@ -60,20 +60,11 @@ export class RentEditComponent implements OnInit {
         this.sub = this.route.params.subscribe(params => {
             this.id = +params['id'];
         });
-        this.customers = [];
-        this.products = [];
-
-        this.customerService.getCustomers().subscribe((data: any[]) => {
-            for (let i = 0 ; i <= data.length - 1; i++) {
-                const customer: Customer = data[i];
-                this.customers.push(customer);
-            }
+        this.customerService.getCustomers().subscribe((data: Array<Customer>) => {
+            this.customers = data;
         });
-        this.productService.getProducts().subscribe((data: any[]) => {
-            for (let i = 0 ; i <= data.length - 1; i++) {
-                const product: Product = data[i];
-                this.products.push(product);
-            }
+        this.productService.getProducts().subscribe((data: Array<Product>) => {
+            this.products = data;
         });
         this.rentService.getSingleRent(this.id).subscribe((data: Rent) => {
             this.rent = data;

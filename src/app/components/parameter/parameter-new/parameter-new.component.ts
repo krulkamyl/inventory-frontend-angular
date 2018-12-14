@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
   templateUrl: './parameter-new.component.html'
 })
 export class ParameterNewComponent implements OnInit {
-  name = new FormControl('',[
+  name = new FormControl('', [
       Validators.required,
       Validators.minLength(2)
   ]);
@@ -31,9 +31,8 @@ export class ParameterNewComponent implements OnInit {
               alert(error.message);
             }
         );
-      }
-      else {
-        alert("Field is required!");
+      } else {
+        alert('Field is required!');
       }
 
   }

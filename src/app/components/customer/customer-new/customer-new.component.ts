@@ -9,7 +9,6 @@ import {Router} from '@angular/router';
     templateUrl: './customer-new.component.html'
 })
 export class CustomerNewComponent implements OnInit {
-    customers = [];
     name = new FormControl('', [
         Validators.required,
         Validators.minLength(2)
@@ -21,11 +20,6 @@ export class CustomerNewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.customerService.getCustomers().subscribe((data: any[]) => {
-            for (let i = 0; i <= data.length - 1; i++) {
-                this.customers.push(new Customer(data[i].id, data[i].name, data[i].created_at, data[i].updated_at));
-            }
-        });
     }
 
     addCustomer() {

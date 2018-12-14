@@ -7,15 +7,11 @@ import {Customer} from '../../../models/customer';
   templateUrl: './customer-list.component.html'
 })
 export class CustomerListComponent implements OnInit {
-  customers = [];
+  customers: any;
   constructor(private customerService: CustomerService) { }
   ngOnInit() {
-    this.customers = [];
-    this.customerService.getCustomers().subscribe((data : any[]) => {
-      for (let i = 0 ; i <= data.length - 1; i++) {
-        const customer: Customer = data[i];
-        this.customers.push(customer);
-      }
+    this.customerService.getCustomers().subscribe((data: Array<Customer>) => {
+      this.customers = data;
     });
   }
 
@@ -25,7 +21,7 @@ export class CustomerListComponent implements OnInit {
       this.customerService.removeCustomer(id).subscribe(
           data => {
             alert('Customer has deleted!');
-            this.ngOnInit();
+            this.customers = data.body;
           },
           error => {
             alert(error.message);

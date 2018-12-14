@@ -7,19 +7,14 @@ import {Rent} from '../../../models/rent';
     templateUrl: './rent-list.component.html'
 })
 export class RentListComponent implements OnInit {
-    rents = [];
+    rents: any = [];
 
     constructor(private rentService: RentService) {
     }
 
     ngOnInit() {
-
-        this.rents = [];
-        this.rentService.getRents().subscribe((data: any[]) => {
-            for (let i = 0; i <= data.length - 1; i++) {
-                const rent: Rent = data[i];
-                this.rents.push(rent);
-            }
+        this.rentService.getRents().subscribe((data: Array<Rent>) => {
+            this.rents = data;
         });
     }
 
@@ -29,7 +24,7 @@ export class RentListComponent implements OnInit {
             this.rentService.removeRent(id).subscribe(
                 data => {
                     alert('Rent has deleted!');
-                    this.ngOnInit();
+                    this.rents = data.body;
                 },
                 error => {
                     alert(error.message);
@@ -43,7 +38,7 @@ export class RentListComponent implements OnInit {
         if (decision === true) {
             this.rentService.changeDenuncation(id).subscribe(
                 data => {
-                    this.ngOnInit();
+                    this.rents = data.body;
                 },
                 error => {
                     alert(error.message);

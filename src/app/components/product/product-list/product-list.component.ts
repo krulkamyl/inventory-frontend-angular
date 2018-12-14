@@ -12,7 +12,7 @@ import {ParamService} from '../../../service/param.service';
 export class ProductListComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('resetForm') resetForm: ElementRef;
-  products: Array<Product>;
+  products: any;
   parameters: Array<Parameter>;
 
   productForm: FormGroup = this.formBuilder.group({
@@ -29,8 +29,6 @@ export class ProductListComponent implements OnInit {
               private parameterService: ParamService,
               private formBuilder: FormBuilder) { }
   ngOnInit() {
-    this.products = [];
-    this.parameters = [];
     this.productService.getProducts().subscribe((data: Array<Product>) => {
       this.products = data;
     });
@@ -43,7 +41,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onSearch(value) {
-    this.products = [];
     this.closeModal.nativeElement.click();
     this.resetForm.nativeElement.click();
     const postData = {
@@ -62,7 +59,7 @@ export class ProductListComponent implements OnInit {
       this.productService.removeProduct(id).subscribe(
           data => {
             alert('Product has deleted!');
-            this.ngOnInit();
+            this.products = data.body;
           },
           error => {
             alert(error.message);
