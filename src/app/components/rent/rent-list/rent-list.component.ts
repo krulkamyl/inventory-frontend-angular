@@ -39,14 +39,16 @@ export class RentListComponent implements OnInit {
     }
 
     denuncationAction(id) {
-        this.rentService.changeDenuncation(id).subscribe(
-            data => {
-                alert('Value changed');
-                this.ngOnInit();
-            },
-            error => {
-                alert(error.message);
-            }
-        );
+        const decision = confirm('Are you sure you want to change denuncation value?');
+        if (decision === true) {
+            this.rentService.changeDenuncation(id).subscribe(
+                data => {
+                    this.ngOnInit();
+                },
+                error => {
+                    alert(error.message);
+                }
+            );
+        }
     }
 }
