@@ -1,0 +1,10 @@
+<h1>Create new customer</h1>
+<div class="form-group">
+    <label>
+        Customer name:
+        <input type="text" [formControl]="name" class="form-control">
+    </label>
+</div>
+<div align="center">
+    <button class="btn btn-success" (click)="addCustomer()">Save customer</button>
+</div>

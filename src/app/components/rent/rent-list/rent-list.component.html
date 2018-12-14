@@ -1,0 +1,44 @@
+<h1>Rents</h1>
+<div align="right">
+  <a href="/rents/new" class="btn btn-primary">Add rent</a>
+</div>
+<table class="table" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Customer</th>
+      <th>Product</th>
+      <th>Duration</th>
+      <th>Rented start</th>
+      <th>Rented end</th>
+      <th>Rent cost</th>
+      <th>Denuncation</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody  *ngFor="let rent of rents">
+      <tr>
+        <td>{{ rent.id }}</td>
+        <td>{{ rent.customer.name }}</td>
+        <td>{{ rent.product.name }}</td>
+        <td>{{ rent.duration_time }} days</td>
+        <td>{{ rent.rented_time }}</td>
+        <td>{{ rent.duration_time_date }}</td>
+        <td>{{ rent.rented_cost }}</td>
+        <td>
+          <div *ngIf="rent.is_denuncation; else denuncationOff">
+            <span class="badge badge-danger">Yes</span>
+          </div>
+          <ng-template #denuncationOff>
+            <span class="badge badge-primary">No</span>
+          </ng-template>
+
+        </td>
+        <td>{{ rent.created_at }}</td>
+        <td>{{ rent.updated_at }}</td>
+        <td><button class="btn btn-primary btn-sm" (click)="denuncationAction(rent.id)">Change denuncation</button>  <a href="/rents/edit/{{ rent.id }}" class="btn btn-info btn-sm">Edit</a>&nbsp;&nbsp;<a class="btn btn-danger btn-sm" (click)="deleteRent(rent.id)" style="color: #FFF;">Delete</a></td>
+      </tr>
+  </tbody>
+</table>

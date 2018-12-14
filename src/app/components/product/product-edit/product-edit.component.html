@@ -1,0 +1,29 @@
+<h1>Update product</h1>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)">
+  <div class="form-group">
+    <label>
+      Product name:
+      <input type="text" formControlName="name" class="form-control">
+      <mat-error *ngFor="let validation of validation_messages.name">
+        <mat-error class="error-message"
+                   *ngIf="productForm.get('name').hasError(validation.type) && (productForm.get('name').dirty || productForm.get('name').touched)">{{validation.message}}</mat-error>
+      </mat-error>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>
+      Product price:
+      <input type="number" formControlName="price" class="form-control">
+    </label>
+  </div>
+  <h3>Params</h3>
+  <div class="form-group" *ngFor="let parameter of parameters">
+    <label>
+      {{ parameter.name }}
+      <input formControlName="{{ parameter.id }}" class="form-control">
+    </label>
+  </div>
+  <div align="center">
+    <button class="btn btn-success" type="submit">Update product</button>
+  </div>
+</form>

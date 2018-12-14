@@ -1,0 +1,24 @@
+<h1>Customers</h1>
+<div align="right">
+  <a href="/customers/new" class="btn btn-primary">Add Customer</a>
+</div>
+<table class="table" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody  *ngFor="let customer of customers">
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.created_at }}</td>
+        <td>{{ customer.updated_at}}</td>
+        <td><a href="/customers/edit/{{ customer.id }}" class="btn btn-info btn-sm">Edit</a>&nbsp;&nbsp;<a class="btn btn-danger btn-sm" (click)="deleteCustomer(customer.id)" style="color: #FFF;">Delete</a></td>
+      </tr>
+  </tbody>
+</table>

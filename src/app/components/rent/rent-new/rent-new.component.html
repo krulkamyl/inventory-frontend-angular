@@ -1,0 +1,36 @@
+<h1>Create new rent</h1>
+<form [formGroup]="rentForm" (ngSubmit)="onSubmit(rentForm.value)">
+    <div class="form-group">
+        <label>
+            Customer:
+            <select formControlName="id_customer" class="form-control">
+                <option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</option>
+            </select>
+            Product:
+            <select formControlName="id_product" class="form-control">
+                <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+            </select>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Start rented date" formControlName="rented_time">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            Rent time duration:
+            <select formControlName="duration_time" class="form-control">
+                <option *ngFor="let timeDuration of timeDurations" [value]="timeDuration">{{ timeDuration }} days</option>
+            </select>
+        </label>
+    </div>
+    <div align="center">
+        <button class="btn btn-success" type="submit">Save rent</button>
+    </div>
+</form>
+

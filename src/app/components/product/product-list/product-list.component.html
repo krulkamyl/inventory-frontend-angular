@@ -1,0 +1,84 @@
+<h1>Products</h1>
+<div align="right">
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#searchModal">
+        Search
+    </button>&nbsp;
+    <a href="/products/new" class="btn btn-primary">Add Product</a>
+</div>
+<table class="table" style="margin-top: 10px;">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>In leasing</th>
+        <th>Parameters</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>History</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let product of products">
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>
+            <div *ngIf="product.in_leasing; else leasingOff">
+                <span class="badge badge-success">Yes</span>
+            </div>
+            <ng-template #leasingOff>
+                <span class="badge badge-warning">No</span>
+            </ng-template>
+
+        </td>
+        <td>
+            <ul *ngFor="let param of product.parameters">
+                <li>{{ param.name }}: {{ param.value }}</li>
+            </ul>
+        </td>
+        <td>{{ product.created_at }}</td>
+        <td>{{ product.updated_at}}</td>
+        <td>
+            <div *ngIf="product.have_history;">
+                <a href="/products/history/{{ product.id }}" class="btn btn-secondary btn-sm">History</a>
+            </div>
+        </td>
+        <td><a href="/products/edit/{{ product.id }}" class="btn btn-info btn-sm">Edit</a>&nbsp;&nbsp;<a
+                class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)" style="color: #FFF;">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="productForm" (ngSubmit)="onSearch(productForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalTitle">Search</h5>
+                    <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        Name
+                        <input formControlName="name" class="form-control">
+                    </label>
+                    <h5>Search by param</h5>
+                    <div class="form-group" *ngFor="let parameter of parameters">
+                        <label>
+                            {{ parameter.name }}
+                            <input formControlName="{{ parameter.id }}" class="form-control">
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input #resetForm class="btn btn-danger" type="reset" value="Reset">
+                    <input type="submit" class="btn btn-primary" value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<h1>History product - {{ rents[0].product.name }}</h1>
+<table class="table" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Cost</th>
+      <th>Rented date (duration)</th>
+    </tr>
+  </thead>
+  <tbody  *ngFor="let rent of rents">
+      <tr>
+        <td>{{ rent.customer.name }}</td>
+        <td>{{ rent.rented_cost }}</td>
+        <td>{{ rent.rented_time}} - {{ rent.duration_time_date}} ({{ rent.duration_time }} days)</td>
+      </tr>
+  </tbody>
+</table>

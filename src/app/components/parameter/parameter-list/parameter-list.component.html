@@ -1,0 +1,24 @@
+<h1>Parameters</h1>
+<div align="right">
+  <a href="/parameters/new" class="btn btn-primary">Add Parameter</a>
+</div>
+<table class="table" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody  *ngFor="let parameter of parameters">
+      <tr>
+        <td>{{ parameter.id }}</td>
+        <td>{{ parameter.name }}</td>
+        <td>{{ parameter.created_at }}</td>
+        <td>{{ parameter.updated_at}}</td>
+        <td><a href="/parameters/edit/{{ parameter.id }}" class="btn btn-info btn-sm">Edit</a>&nbsp;&nbsp;<a class="btn btn-danger btn-sm" (click)="deleteParameter(parameter.id)" style="color: #FFF;">Delete</a></td>
+      </tr>
+  </tbody>
+</table>
