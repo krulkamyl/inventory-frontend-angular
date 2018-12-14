@@ -54,7 +54,7 @@ export class RentNewComponent implements OnInit {
             this.customers = data;
         });
         this.productService.getProducts().subscribe((data: Array<Product>) => {
-            this.customers = data;
+            this.products = data;
         });
     }
 
