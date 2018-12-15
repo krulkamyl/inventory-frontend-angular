@@ -1,40 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {ParamService} from '../../../service/param.service';
-import {Router} from '@angular/router';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ParamService } from '../../../service/param.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-parameter-new',
   templateUrl: './parameter-new.component.html'
 })
 export class ParameterNewComponent implements OnInit {
-  name = new FormControl('', [
-      Validators.required,
-      Validators.minLength(2)
-  ]);
+  parameterForm: FormGroup = this.formBuilder.group({
+    name: new FormControl('', {
+      validators: Validators.compose([
+        Validators.required,
+        Validators.maxLength(25),
+        Validators.minLength(3),
+      ])
+    })
+  });
+
 
   constructor(
-      private parameterService: ParamService,
-      private router: Router) { }
+    private parameterService: ParamService,
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
   }
-
-    addParameter() {
-      if (this.name.valid) {
-        this.parameterService.addParam(this.name.value.toString()).subscribe(
-            data => {
-              alert('Parameter has saved!');
-              this.router.navigate(['/parameters']);
-            },
-            error => {
-              alert(error.message);
-            }
-        );
-      } else {
-        alert('Field is required!');
+  onSubmit(value) {
+    this.parameterService.addParam(value.name).subscribe(
+      data => {
+        alert('Parameter has saved!');
+        this.router.navigate(['/parameters']);
+      },
+      error => {
+        alert(error.message);
       }
-
+    );
   }
 
 }

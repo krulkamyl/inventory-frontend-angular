@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CustomerService} from '../../../service/customer.service';
-import {FormControl, Validators} from '@angular/forms';
-import {Customer} from '../../../models/customer';
+import { CustomerService } from '../../../service/customer.service';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Customer } from '../../../models/customer';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -13,15 +13,21 @@ export class CustomerEditComponent implements OnInit {
   id: number;
   private sub: any;
 
-  name = new FormControl('', [
-    Validators.required,
-    Validators.minLength(2)
-  ]);
+  customerForm: FormGroup = this.formBuilder.group({
+    name: new FormControl('', {
+      validators: Validators.compose([
+        Validators.required,
+        Validators.maxLength(25),
+        Validators.minLength(3),
+      ])
+    })
+  });
 
   constructor(
-      private customerService: CustomerService,
-      private route: ActivatedRoute,
-      private router: Router
+    private customerService: CustomerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -29,25 +35,20 @@ export class CustomerEditComponent implements OnInit {
       this.id = +params['id'];
     });
 
-    this.customerService.getSingleCustomer(this.id).subscribe((data : Customer) => {
-      this.name.setValue(data.name);
+    this.customerService.getSingleCustomer(this.id).subscribe((data: Customer) => {
+      this.customerForm.get('name').setValue(data.name);
     });
   }
 
-  updateCustomer() {
-    if (this.name.valid) {
-      this.customerService.updateCustomer(this.id,this.name.value.toString()).subscribe(
-          data => {
-            alert('Customer has updated!');
-            this.router.navigate(['/customers']);
-          },
-          error => {
-            alert(error.message);
-          }
-      );
-    } else {
-      alert('Field is required!');
-    }
-
+  onSubmit(value) {
+    this.customerService.updateCustomer(this.id, value.name).subscribe(
+      data => {
+        alert('Customer has updated!');
+        this.router.navigate(['/customers']);
+      },
+      error => {
+        alert(error.message);
+      }
+    );
   }
 }
